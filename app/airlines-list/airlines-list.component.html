@@ -1,0 +1,71 @@
+<h2 class="textStyle text-center">Welcome to Infy Airlines</h2>
+<div class="row" *ngIf="airlinesArray?.length">
+  <!-- DONE Iterate over the airlinesArray to render the cards for all the airlines -->
+  <div
+    *ngFor="let airline of airlinesArray; let i = index"
+    class="col-md-3 mt-3"
+    id="airlineCard"
+  >
+    <div class="card shadow" style="opacity: 0.8">
+      <!-- DONE modify the img tag to display the image using the airlinesImage property 
+                of all the airlines and set the alternate text as the airlines id -->
+      <img
+        id="airlineImage"
+        height="200px"
+        class="card-img-top"
+        [src]="'assets/' + airline.airlinesImage"
+      />
+      <div class="card-body text text-center">
+        <h6 id="cardTitle">
+          <!--  DONE
+            display the airlines name and airlines id as shown in the screenshots -->
+          {{ airline.airlinesName + " | " + airline.id }}
+        </h6>
+        <div class="cardData">
+          <h6 id="flyingFrom">
+            Flying To:
+            <!--
+                DONE 
+                 display the airlines fare with proper currency symbol 
+                -->
+            {{ airline.source }}
+          </h6>
+          <h6 id="flyingTo">
+            Flying From:
+            <!--
+                DONE 
+                 display the airlines fare with proper currency symbol 
+                -->
+            {{ airline.destination }}
+          </h6>
+          <h6 id="fare">
+            Fare:
+            <!--
+                DONE 
+                 display the airlines fare with proper currency symbol 
+                -->
+            {{ airline.fare | currency: "USD" }}
+          </h6>
+        </div>
+        <!-- DONE
+                    1. If the airlines is Cancelled, the button should be disabled, 
+                    2. Invoke the showBookingForm method with proper airlines id value 
+            -->
+        <button
+          class="btn btn-outline-dark btn-sm"
+          id="bookTicket"
+          [disabled]="airline.status.toLowerCase() == 'cancelled'"
+          (click)="showBookingForm(airline.id)"
+        >
+          Book Ticket
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!airlinesArray?.length">
+  <h1 class="text text-center" id="errorMessage">
+    <!--  DONE display the error message here -->
+    Error , fetching the airlines data.
+  </h1>
+</div>
